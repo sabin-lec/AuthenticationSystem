@@ -6,23 +6,6 @@ session_start();
 include 'connection.php'; // Include the connection file
 include 'validation.php'; // Include the validation file to validate email
 
-// class InvalidEmailException extends Exception {
-//     public function errorMessage() {
-//         // Error message
-//         return "Error: '{$this->getMessage()}' is not a valid email address.";
-//     }
-// }
-
-// function validateEmail($email) {
-//     // Regular expression for validating email
-//     $emailPattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
-
-//     // Check if the email matches the pattern
-//     if (!preg_match($emailPattern, $email)) {
-//         // Throw custom exception if email is invalid
-//         throw new InvalidEmailException($email);
-//     }
-// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -31,10 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Validate the email format using regex
         validateEmail($username);
-
-        //convert password to hash
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        echo $hashed_password;
 
         // Prepare and execute SQL query to get the hashed password
         $stmt = $conn->prepare("SELECT password FROM tbl_users WHERE username = ?");
